@@ -2,7 +2,7 @@
 
 //Importar la interface de Apod
 //Solo para tipar, no lo importa en runtime.
-import type { ApodRaw } from "../types/apod.js";
+import type { ApodRaw } from "../types/apod.types.js";
 
 export class Apod {
     readonly fecha: string;
