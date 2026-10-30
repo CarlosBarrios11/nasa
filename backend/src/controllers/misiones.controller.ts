@@ -2,7 +2,7 @@ import type { Request, Response } from "express";
 import {
     obtenerTodas,
     filtrarPorDestino
-} from "../services/misones.services.js";
+} from "../services/misiones.services.js";
 
 
 export function listarMisiones(req: Request, res: Response): void {
