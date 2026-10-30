@@ -1,0 +1,72 @@
+[
+  {
+    "id": 1,
+    "nombre": "Apollo 11",
+    "destino": "Luna",
+    "agencia": "NASA",
+    "anio": 1969
+  },
+  {
+    "id": 2,
+    "nombre": "Voyager 1",
+    "destino": "Espacio interestelar",
+    "agencia": "NASA",
+    "anio": 1977
+  },
+  {
+    "id": 3,
+    "nombre": "Mars Pathfinder",
+    "destino": "Marte",
+    "agencia": "NASA",
+    "anio": 1996
+  },
+  {
+    "id": 4,
+    "nombre": "Cassini-Huygens",
+    "destino": "Saturno",
+    "agencia": "NASA y ESA",
+    "anio": 1997
+  },
+  {
+    "id": 5,
+    "nombre": "Curiosity",
+    "destino": "Marte",
+    "agencia": "NASA",
+    "anio": 2011
+  },
+  {
+    "id": 6,
+    "nombre": "Juno",
+    "destino": "Jupiter",
+    "agencia": "NASA",
+    "anio": 2011
+  },
+  {
+    "id": 7,
+    "nombre": "Perseverance",
+    "destino": "Marte",
+    "agencia": "NASA",
+    "anio": 2020
+  },
+  {
+    "id": 8,
+    "nombre": "James Webb",
+    "destino": "Espacio profundo",
+    "agencia": "NASA y ESA",
+    "anio": 2021
+  },
+  {
+    "id": 9,
+    "nombre": "Artemis I",
+    "destino": "Luna",
+    "agencia": "NASA",
+    "anio": 2022
+  },
+  {
+    "id": 10,
+    "nombre": "Europa Clipper",
+    "destino": "Europa",
+    "agencia": "NASA",
+    "anio": 2024
+  }
+]
