@@ -23,5 +23,5 @@ export const env = {
   APOD_API_KEY: process.env.APOD_API_KEY,
   NASA_LIBRARY_BASE: "https://images-api.nasa.gov",
   JWST_BASE: "https://api.jwstapi.com/",
-  APOD_BASE: "https://science.nasa.gov",
+  APOD_BASE: "https://science.nasa.gov/wp-json/wp/v2/apod-basic",
 } as const; //Le dice a TypeScript que trate las propiedades del objeto como literales de solo lectura (readonly).
