@@ -18,19 +18,18 @@ export async function obtenerImagenesJwst(page: number, perPage: number) : Promi
     const url : string = `${env.JWST_BASE}all/type/jpg?${params}`;
 
 
-    const res = await fetch(url, {
+    const respuesta = await fetch(url, {
         headers : {"X-API-KEY": env.JWST_API_KEY},
     });
     
 
-     if (!res.ok) {
-        throw new Error(`JWST_HTTP_${res.status}`);
+    if (!respuesta.ok) {
+        throw new Error(`JWST_HTTP_${respuesta.status}`);
     }
 
-    const data = (await res.json()) as JwstResponse; //Datos crudos (No transforma, solo ayuda a guiar para acceder a lo que se haya hecho en la interfaz)
+    const data : JwstResponse = (await respuesta.json()); //Datos crudos (No transforma, solo ayuda a guiar para acceder a lo que se haya hecho en la interfaz)
 
-
-    //REVISAR, POSIBLE FALLO
+    
     if (!data || !Array.isArray(data.body)) {
         throw new Error("JWST_FORMATO_INVALIDO");
     }
