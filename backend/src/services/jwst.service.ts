@@ -2,17 +2,18 @@
 
 import {env} from "../config/env.js";
 
-import type { JwstResponse } from "../types/jwst.js"; //Interfaz cruda (atributos reales, solo los que quiero acceder)
-import type {JwstResponseNormalizada} from "../types/jwst.js" //Interfaz normalizada (atributos con nombres normalizados)
+import type { JwstResponse } from "../types/jwst.types.js"; //Interfaz cruda (atributos reales, solo los que quiero acceder)
+import type {JwstResponseNormalizada} from "../types/jwst.types.js" //Interfaz normalizada (atributos con nombres normalizados)
 
-export async function obtenerImagenesJwst(page: number = 1, perPage: number = 1) : Promise <JwstResponseNormalizada>{
+export async function obtenerImagenesJwst(page: number, perPage: number) : Promise <JwstResponseNormalizada>{
 
     //Inferencia de tipos de typescript
     const params = new URLSearchParams();
 
     params.append("page", page.toString());
+    
     params.append("perPage", perPage.toString());
-
+    
 
     const url : string = `${env.JWST_BASE}all/type/jpg?${params}`;
 
@@ -30,7 +31,7 @@ export async function obtenerImagenesJwst(page: number = 1, perPage: number = 1)
 
 
     //REVISAR, POSIBLE FALLO
-    if (!data || !Array.isArray(data)) {
+    if (!data || !Array.isArray(data.body)) {
         throw new Error("JWST_FORMATO_INVALIDO");
     }
 
