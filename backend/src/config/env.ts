@@ -22,6 +22,6 @@ export const env = {
   JWST_API_KEY: process.env.JWST_API_KEY,
   APOD_API_KEY: process.env.APOD_API_KEY,
   NASA_LIBRARY_BASE: "https://images-api.nasa.gov",
-  JWST_BASE: "https://api.jwstapi.com",
+  JWST_BASE: "https://api.jwstapi.com/",
   APOD_BASE: "https://science.nasa.gov",
 } as const; //Le dice a TypeScript que trate las propiedades del objeto como literales de solo lectura (readonly).
