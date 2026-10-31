@@ -18,6 +18,5 @@ export interface NasaLibraryItems {
 export interface NasaLibraryCollection {
     collection: {
     items: NasaLibraryItems[];
-    metadata: { total_hits: number };
   };
 }
