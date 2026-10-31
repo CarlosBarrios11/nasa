@@ -11,17 +11,13 @@ dotenv.config();
 if (!process.env.JWST_API_KEY) {
   throw new Error("Falta JWST_API_KEY en el archivo .env");
 }
-if (!process.env.APOD_API_KEY) {
-  throw new Error("Falta APOD_API_KEY en el archivo .env");
-}
 
 
 //Construcción del objeto env
 export const env = {
   PORT: Number(process.env.PORT) || 3000,
   JWST_API_KEY: process.env.JWST_API_KEY,
-  APOD_API_KEY: process.env.APOD_API_KEY,
-  NASA_LIBRARY_BASE: "https://images-api.nasa.gov",
+  NASA_LIBRARY_BASE: "https://images-api.nasa.gov/",
   JWST_BASE: "https://api.jwstapi.com/",
   APOD_BASE: "https://science.nasa.gov/wp-json/wp/v2/apod-basic",
 } as const; //Le dice a TypeScript que trate las propiedades del objeto como literales de solo lectura (readonly).
