@@ -1,0 +1,76 @@
+
+
+PROBAR POST, HERRAMIENTA A UTILIZAR POSTMAN:
+
+Este archivo se puede enviar como body en una petición post a la siguiente ruta (con el servidor del backend levantado, la api key correspondientes en el encabezado):
+
+
+http://localhost:3000/api/jwst-instruments
+
+
+
+{
+  "name": "mi_imagen_jwst.jpg",
+  "data": {
+    "id": "mi_imagen_jwst.jpg",
+    "observation_id": "obs_001",
+    "program": 2734,
+    "details": {
+      "mission": "JWST",
+      "instruments": [{ "instrument": "NIRCam" }],
+      "suffix": "_cal",
+      "description": "Prueba de creación propia"
+    },
+    "file_type": "jpg",
+    "thumbnail": "https://ejemplo.com/thumb.jpg",
+    "location": "https://ejemplo.com/imagen.jpg"
+  }
+}
+
+
+PROBAR GET:
+
+Cambiar el método a get, con esto se puede verificar que el elemento recién creado exista (de último en la lista)
+
+http://localhost:3000/api/jwst-instruments
+
+
+PROBAR PUT:
+
+Cambiar el método a put, la misma url, simplemente se le agrega el id, este id es creado por API RESTFUL y es para identificar a ese elemento recién creado en el paso anterior, buscar la propiedad id (la primera), copiar y pegar en la url al hacer el put, cambiar alguno de los datos del body para hacer reemplazo, o enviar el mismo ya que acepta duplicados
+
+http://localhost:3000/api/jwst-instruments/{id}
+
+
+{
+  "name": "mi_imagen_jwst.jpg",
+  "data": {
+    "id": "mi_imagen_jwst.jpg",
+    "observation_id": "obs_001",
+    "program": 2734,
+    "details": {
+      "mission": "JWST",
+      "instruments": [{ "instrument": "NIRCam" }],
+      "suffix": "_cal",
+      "description": "Prueba de creación propia"
+    },
+    "file_type": "jpg",
+    "thumbnail": "https://ejemplo.com/thumb.jpg",
+    "location": "https://ejemplo.com/imagen.jpg"
+  }
+}
+
+
+
+PROBAR DELETE:
+Cambiar el método a delete, y de igual forma que el paso anterior pasar el id en la url, recordar quitar el body (aunque no afecta en postman)
+
+http://localhost:3000/api/jwst-instruments/{id}
+
+
+
+PROBAR GET:
+
+Cambiar el método a get, con esto se puede verificar que el elemento recién eliminado no exista (de último en la lista)
+
+http://localhost:3000/api/jwst-instruments
