@@ -1,7 +1,7 @@
 
 import {Router} from "express";
 
-import { mostrarImagenDelDia } from "../controllers/apod.types.js";
+import { mostrarImagenDelDia } from "../controllers/apod.controller.js";
 
 export const apodRouter = Router();
 
