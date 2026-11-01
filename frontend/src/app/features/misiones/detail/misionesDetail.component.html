@@ -1,0 +1,22 @@
+<div class="detalle-page">
+  <a routerLink="/misiones" class="volver">← Volver a misiones</a>
+
+  @if (loading) {
+    <p>Cargando…</p>
+  } @else if (errorMsg) {
+    <p class="error">{{ errorMsg }}</p>
+  } @else {
+    <h1>Misiones a {{ destinoBuscado }}</h1>
+    <p class="contador">{{ misiones.length }} misión(es) encontrada(s)</p>
+
+    <div class="misiones-lista">
+      @for (m of misiones; track m.id) {
+        <article class="mision-item">
+          <h2>{{ m.nombre }}</h2>
+          <p><strong>Agencia:</strong> {{ m.agencia }}</p>
+          <p><strong>Año:</strong> {{ m.anio }}</p>
+        </article>
+      }
+    </div>
+  }
+</div>

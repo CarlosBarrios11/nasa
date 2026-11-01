@@ -4,5 +4,12 @@ node_modules/
 # Variables de entorno
 .env
 
-# Build / distribución
+# Archivos compilados de TypeScript
 dist/
+build/
+out/
+*.tsbuildinfo
+
+# Archivos .js y .map generados en la carpeta src (si compilas ahí)
+src/**/*.js
+src/**/*.js.map

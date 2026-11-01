@@ -68,5 +68,19 @@
     "destino": "Europa",
     "agencia": "NASA",
     "anio": 2024
+  },
+  {
+    "id": 11,
+    "nombre": "Parker Solar Probe",
+    "destino": "Sol",
+    "agencia": "NASA",
+    "anio": 2018
+  },
+  {
+    "id": 12,
+    "nombre": "BepiColombo",
+    "destino": "Mercurio",
+    "agencia": "ESA y JAXA",
+    "anio": 2018
   }
 ]

@@ -17,7 +17,7 @@ export async function mostrarImagenDelDia(req: Request, res: Response): Promise<
         res
             .status(502)
             .json({ error: "El servicio APOD no respondió correctamente" });
-        } else if (mensaje === "APOD_INAVLID_FORMAT") {
+        } else if (mensaje === "APOD_INVALID_FORMAT") {
         res
             .status(502)
             .json({ error: "El servicio APOD devolvió datos inesperados" });

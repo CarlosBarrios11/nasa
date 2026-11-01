@@ -1,0 +1,454 @@
+/* === Biblioteca NASA — versión optimizada para móvil === */
+.biblioteca {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/* Quita el flash azul al tocar en iOS/Android */
+.biblioteca button,
+.biblioteca a,
+.biblioteca input,
+.biblioteca select {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ---------- Header ---------- */
+.biblioteca-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.75rem 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border-soft);
+}
+.biblioteca-header h2 {
+  margin: 0;
+  background: var(--accent-grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent; /* necesario en iOS Safari */
+  overflow-wrap: anywhere;
+}
+.biblioteca-header p {
+  flex: 1 1 300px;
+  margin: 0;
+  font-size: 0.95rem;
+  min-width: 0;
+}
+.biblioteca-header > span {
+  font-size: 0.85rem;
+  font-family: var(--mono);
+  color: var(--text-mute);
+  padding: 0.3rem 0.75rem;
+  background: rgba(123, 92, 255, 0.1);
+  border: 1px solid rgba(123, 92, 255, 0.25);
+  border-radius: 999px;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ---------- Filtros ---------- */
+.filtros {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr auto;
+  gap: 0.9rem;
+  align-items: end;
+  padding: 1.25rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+}
+.filtro-campo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  min-width: 0;
+}
+.filtro-campo label {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-mute);
+  font-weight: 600;
+}
+.filtro-campo input,
+.filtro-campo select {
+  width: 100%;
+  padding: 0.7rem 0.8rem;
+  font: inherit;
+  /* max() garantiza >=16px en iOS → evita auto-zoom al enfocar */
+  font-size: max(0.9rem, 16px);
+  min-height: 44px;
+  color: var(--text);
+  background: var(--bg-1);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  -webkit-appearance: none;
+  appearance: none;
+}
+.filtro-campo select {
+  padding-right: 2rem;
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--text-dim) 50%),
+    linear-gradient(135deg, var(--text-dim) 50%, transparent 50%);
+  background-position: calc(100% - 16px) 50%, calc(100% - 10px) 50%;
+  background-size: 6px 6px, 6px 6px;
+  background-repeat: no-repeat;
+  background-color: var(--bg-1);
+  cursor: pointer;
+}
+.filtro-campo input::placeholder { color: var(--text-mute); }
+.filtro-campo input:focus,
+.filtro-campo select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(123, 92, 255, 0.18);
+}
+.filtro-acciones {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+/* ---------- Botones ---------- */
+.btn-primario,
+.btn-secundario {
+  padding: 0.7rem 1.2rem;
+  font: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-radius: 10px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: transform 0.2s ease, box-shadow 0.2s ease,
+              background 0.2s ease, border-color 0.2s ease;
+  white-space: nowrap;
+  min-height: 44px;
+  touch-action: manipulation; /* elimina el retardo de doble-tap en iOS */
+}
+.btn-primario {
+  color: #fff;
+  background: var(--accent-grad);
+  box-shadow: 0 6px 18px rgba(123, 92, 255, 0.35);
+}
+.btn-primario:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(123, 92, 255, 0.5);
+}
+.btn-primario:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 12px rgba(123, 92, 255, 0.4);
+}
+.btn-secundario {
+  color: var(--text);
+  background: transparent;
+  border-color: var(--border);
+}
+.btn-secundario:hover {
+  background: var(--surface-2);
+  border-color: var(--accent);
+}
+.btn-secundario:active { background: var(--surface-2); }
+
+/* ---------- Info ---------- */
+.biblioteca-info {
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  padding: 0.5rem 0.9rem;
+  background: rgba(76, 201, 240, 0.08);
+  border-left: 3px solid var(--accent-2);
+  border-radius: 6px;
+}
+
+/* ---------- Grid ---------- */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+
+/* ---------- Card ---------- */
+.card {
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  animation: fadeInUp 0.4s ease both;
+  position: relative;
+}
+
+/* Hover SOLO en dispositivos con puntero real (evita saltos al tocar) */
+@media (hover: hover) {
+  .card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(123, 92, 255, 0.6);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.55),
+                0 0 0 1px rgba(123, 92, 255, 0.2);
+  }
+  .card:hover .card-media img,
+  .card:hover .card-media video {
+    transform: scale(1.04);
+  }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.card-media {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  background: #000;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.card-media img,
+.card-media video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+.card-media audio { width: 90%; }
+
+.card-badge {
+  position: absolute;
+  top: 0.6rem;
+  left: 0.6rem;
+  z-index: 2;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.6);
+  color: var(--accent-2);
+  border: 1px solid rgba(76, 201, 240, 0.5);
+  -webkit-backdrop-filter: blur(6px); /* fallback Safari antiguo */
+  backdrop-filter: blur(6px);
+  max-width: calc(100% - 1.2rem);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.card-badge:empty { display: none; }
+
+.card-body {
+  padding: 0.85rem 1rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  min-width: 0;
+}
+.card-title {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+.card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-top: auto;
+  flex-wrap: wrap; /* evita que la fecha se corte en pantallas pequeñas */
+}
+.card-date {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--text-mute);
+}
+.card .btn-fav {
+  padding: 0.35rem 0.7rem;
+  font-size: 0.8rem;
+}
+
+/* Corazón circular: 44×44 px exactos para el mínimo táctil de Apple */
+.card > .btn-fav {
+  position: absolute;
+  top: 0.65rem;
+  right: 0.65rem;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  gap: 0;
+  border-radius: 50%;
+  font-size: 0;
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  touch-action: manipulation;
+}
+.card > .btn-fav::before {
+  content: "❤";
+  font-size: 1.15rem;
+  line-height: 1;
+}
+
+/* ---------- Paginación ---------- */
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 0.75rem 0;
+  flex-wrap: wrap;
+}
+.pg-btn {
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease,
+              color 0.2s ease, transform 0.2s ease;
+  touch-action: manipulation;
+}
+.pg-btn:hover:not(:disabled) {
+  background: var(--surface-2);
+  border-color: var(--accent);
+  color: var(--accent-2);
+  transform: translateY(-2px);
+}
+.pg-btn:active:not(:disabled) { transform: translateY(0); }
+.pg-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+.pg-info {
+  font-family: var(--mono);
+  font-size: 0.9rem;
+  color: var(--text-dim);
+  padding: 0.4rem 1rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+}
+.pg-info strong { color: var(--accent-2); }
+
+/* ---------- Per page ---------- */
+.per-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  font-size: 0.9rem;
+  color: var(--text-dim);
+  flex-wrap: wrap;
+}
+.per-page label {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.03em;
+}
+.per-page select {
+  -webkit-appearance: none;
+  appearance: none;
+  padding: 0.55rem 2rem 0.55rem 0.85rem;
+  font: inherit;
+  font-size: max(0.85rem, 16px); /* ≥16px → sin zoom en iOS */
+  min-height: 44px;
+  color: var(--text);
+  background:
+    linear-gradient(45deg, transparent 50%, var(--text-dim) 50%)
+      calc(100% - 16px) 50% / 6px 6px no-repeat,
+    linear-gradient(135deg, var(--text-dim) 50%, transparent 50%)
+      calc(100% - 10px) 50% / 6px 6px no-repeat,
+    var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+.per-page select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(123, 92, 255, 0.2);
+}
+
+/* ---------- Sin resultados ---------- */
+.sin-resultados {
+  grid-column: 1 / -1;
+  padding: 3rem 1rem;
+  color: var(--text-mute);
+  font-family: var(--mono);
+  font-size: 0.9rem;
+  text-align: center;
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+  background: rgba(22, 26, 46, 0.5);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 960px) {
+  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .filtros { grid-template-columns: 1fr 1fr; }
+  .filtro-buscar { grid-column: 1 / -1; }
+  .filtro-acciones { grid-column: 1 / -1; }
+  .filtro-acciones > * { flex: 1; }
+}
+
+@media (max-width: 600px) {
+  .biblioteca { gap: 1rem; }
+  .grid { grid-template-columns: 1fr; gap: 1rem; }
+  .filtros {
+    grid-template-columns: 1fr;
+    padding: 1rem;
+    gap: 0.75rem;
+  }
+  .filtro-acciones > * { flex: 1; }
+  .biblioteca-header { gap: 0.5rem 1rem; }
+  .biblioteca-header > span { font-size: 0.75rem; }
+  .card-body { padding: 0.75rem 0.9rem 0.9rem; }
+  .pagination { gap: 0.5rem; }
+  .pg-info { font-size: 0.8rem; padding: 0.35rem 0.75rem; }
+}
+
+/* Respeto a usuarios con "reducir movimiento" activado */
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .card-media img,
+  .card-media video,
+  .btn-primario,
+  .pg-btn {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
+}
+
+/* Safe area (notch) — opcional: solo si el contenedor ocupa toda la pantalla
+@supports (padding: env(safe-area-inset-left)) {
+  .biblioteca {
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+}
+*/

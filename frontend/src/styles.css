@@ -1,1 +1,372 @@
-/* You can add global styles to this file, and also import other style files */
+/* =========================================================
+   COSMOS · Estilos globales AstroLab
+   Versión optimizada para iOS / Android / responsive
+   ========================================================= */
+
+/* ---------- Design tokens ---------- */
+:root {
+  --bg-0: #05060d;
+  --bg-1: #0b0e1c;
+  --surface: #161a2e;
+  --surface-2: #1d2340;
+  --border: #262b4a;
+  --border-soft: #1a1f38;
+
+  --text: #e6e9f5;
+  --text-dim: #9aa1bd;
+  --text-mute: #6c7392;
+
+  --accent: #7b5cff;
+  --accent-2: #4cc9f0;
+  --accent-grad: linear-gradient(135deg, #7b5cff 0%, #4cc9f0 100%);
+
+  --radius: 14px;
+  --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.55);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.4);
+
+  --font: "Inter", "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+  --mono: "JetBrains Mono", "Fira Code", ui-monospace, Menlo, monospace;
+
+  /* Alturas de UI reutilizables */
+  --touch-min: 44px;
+  --content-max: 1200px;
+  --content-width: 92%;
+}
+
+/* ---------- Reset / base ---------- */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  /* Evita que iOS agrande la fuente al rotar */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100dvh; /* evita saltos por la barra de Safari */
+  font-family: var(--font);
+  color: var(--text);
+  line-height: 1.6;
+  background:
+    radial-gradient(1200px 800px at 15% -10%, rgba(123, 92, 255, 0.18), transparent 60%),
+    radial-gradient(900px 700px at 90% 10%, rgba(76, 201, 240, 0.12), transparent 55%),
+    radial-gradient(700px 700px at 50% 120%, rgba(123, 92, 255, 0.12), transparent 60%),
+    var(--bg-0);
+  background-attachment: scroll; /* fixed es muy costoso en iOS */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Fondo estrellado — absoluto en móvil, fixed en desktop */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    radial-gradient(1px 1px at 20px 30px, rgba(255,255,255,0.8) 50%, transparent 51%),
+    radial-gradient(1px 1px at 120px 80px, rgba(255,255,255,0.5) 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 300px 220px, rgba(255,255,255,0.7) 50%, transparent 51%),
+    radial-gradient(1px 1px at 450px 90px, rgba(255,255,255,0.4) 50%, transparent 51%),
+    radial-gradient(1px 1px at 600px 300px, rgba(255,255,255,0.6) 50%, transparent 51%);
+  background-size: 700px 700px;
+  opacity: 0.35;
+}
+
+/* En móvil el ::before fijo consume GPU al hacer scroll → lo pasamos a absoluto */
+@media (max-width: 768px) {
+  body::before {
+    position: absolute;
+    height: 100%;
+  }
+}
+
+img, video, audio {
+  max-width: 100%;
+  display: block;
+}
+img, video { height: auto; }
+
+/* Quita el flash azul de iOS/Android al tocar */
+a,
+button,
+[role="button"],
+input,
+select,
+textarea,
+label {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Elimina el retardo de ~300ms al tocar (doble-tap zoom) */
+button,
+[role="button"],
+a,
+select,
+input[type="button"],
+input[type="submit"],
+input[type="reset"] {
+  touch-action: manipulation;
+}
+
+/* ---------- Tipografía ---------- */
+a {
+  color: var(--accent-2);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+@media (hover: hover) {
+  a:hover { color: #8be0ff; }
+}
+
+h1, h2, h3, h4 {
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin: 0 0 0.5rem;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+h1 { font-size: clamp(1.75rem, 4vw + 0.25rem, 3rem); }
+h2 { font-size: clamp(1.5rem, 2.5vw + 0.25rem, 2rem); }
+h3 { font-size: 1.05rem; }
+
+p {
+  margin: 0 0 0.75rem;
+  color: var(--text-dim);
+  overflow-wrap: anywhere;
+}
+
+/* ---------- Formularios (iOS: ≥16px evita auto-zoom) ---------- */
+input,
+select,
+textarea {
+  font-size: max(1rem, 16px);
+  min-height: var(--touch-min);
+  font-family: inherit;
+  color: inherit;
+}
+
+/* ---------- Layout ---------- */
+.container {
+  width: min(var(--content-max), var(--content-width));
+  margin-inline: auto;
+}
+
+main.container {
+  position: relative;
+  z-index: 1;
+  padding: 0.1rem 0 4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+}
+
+/* ---------- Header (shell) ---------- */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  background: rgba(8, 10, 22, 0.75);
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 0;
+  flex-wrap: wrap; /* permite que el nav baje a otra línea en pantallas muy estrechas */
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--touch-min);
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  background: var(--accent-grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent; /* fix: iOS Safari no pinta el gradiente sin esto */
+  text-decoration: none;
+  position: relative;
+}
+.logo::after {
+  content: "✦";
+  margin-left: 0.35rem;
+  font-size: 0.9rem;
+  -webkit-text-fill-color: var(--accent-2);
+  color: var(--accent-2);
+}
+
+.header nav {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.header nav a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--touch-min);
+  padding: 0.55rem 1rem;
+  color: var(--text-dim);
+  font-weight: 500;
+  font-size: 0.95rem;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  transition: background-color 0.2s ease,
+              border-color 0.2s ease,
+              color 0.2s ease;
+}
+@media (hover: hover) {
+  .header nav a:hover {
+    color: var(--text);
+    background: rgba(123, 92, 255, 0.12);
+    border-color: rgba(123, 92, 255, 0.3);
+  }
+}
+.header nav a:active {
+  background: rgba(123, 92, 255, 0.18);
+}
+
+/* ---------- Botón favorito (base reutilizable) ---------- */
+.btn-fav {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  min-height: var(--touch-min);
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  cursor: pointer;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: background-color 0.2s ease,
+              border-color 0.2s ease,
+              color 0.2s ease,
+              transform 0.15s ease,
+              box-shadow 0.2s ease;
+}
+@media (hover: hover) {
+  .btn-fav:hover {
+    background: rgba(123, 92, 255, 0.15);
+    border-color: var(--accent);
+    color: var(--accent-2);
+    box-shadow: 0 6px 18px rgba(123, 92, 255, 0.35);
+    transform: translateY(-2px);
+  }
+  .btn-fav[aria-pressed="true"]:hover {
+    filter: brightness(1.12);
+    box-shadow: 0 8px 22px rgba(123, 92, 255, 0.5);
+  }
+}
+.btn-fav:active { transform: translateY(0) scale(0.94); }
+.btn-fav:focus-visible {
+  outline: 2px solid var(--accent-2);
+  outline-offset: 3px;
+}
+.btn-fav[aria-pressed="true"] {
+  background: var(--accent-grad);
+  border-color: transparent;
+  color: #fff;
+}
+
+/* ---------- Mensaje de error reutilizable ---------- */
+.error {
+  color: #ff6b8a;
+  font-family: var(--mono);
+  font-size: 0.9rem;
+  padding: 0.75rem 1rem;
+  background: rgba(255, 107, 138, 0.08);
+  border-left: 3px solid #ff6b8a;
+  border-radius: 6px;
+  overflow-wrap: anywhere;
+}
+
+/* ---------- Scroll interno: contenedores con overflow-y ---------- */
+[data-scroll],
+.apod-explicacion {
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+}
+
+/* ---------- Safe area (notch de iPhone) ---------- */
+@supports (padding: env(safe-area-inset-left)) {
+  .header-inner {
+    padding-left: max(0px, env(safe-area-inset-left));
+    padding-right: max(0px, env(safe-area-inset-right));
+  }
+  .container {
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 960px) {
+  main.container {
+    padding: 1.75rem 0 3rem;
+    gap: 3rem;
+  }
+}
+
+@media (max-width: 600px) {
+  main.container {
+    padding: 1.25rem 0 2.5rem;
+    gap: 2.25rem;
+  }
+  .header-inner {
+    padding: 0.75rem 0;
+    gap: 0.5rem;
+  }
+  .logo { font-size: 1.25rem; }
+  .header nav a {
+    padding: 0.5rem 0.8rem;
+    font-size: 0.9rem;
+  }
+  h1 { font-size: clamp(1.5rem, 6vw, 2rem); }
+  h2 { font-size: clamp(1.25rem, 5vw, 1.75rem); }
+}
+
+/* En pantallas realmente pequeñas (iPhone SE ~320-360px) */
+@media (max-width: 360px) {
+  :root { --content-width: 94%; }
+  .header nav { gap: 0.25rem; }
+  .header nav a { padding: 0.45rem 0.6rem; font-size: 0.85rem; }
+  .logo { font-size: 1.1rem; }
+}
+
+/* ---------- Accesibilidad: reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .header nav a,
+  .btn-fav,
+  .logo,
+  a {
+    transform: none !important;
+  }
+}

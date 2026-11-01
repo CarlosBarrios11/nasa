@@ -1,0 +1,28 @@
+<section class="apod">
+  @if (loading()) {
+    <p>Cargando…</p>
+  } @else if (errorMsg()) {
+    <p class="error">{{ errorMsg() }}</p>
+  } @else if (apod(); as a) {
+    <div id="apod-media-container">
+      @if (a.tipoMedio === 'image') {
+        <img [src]="a.urlRecurso" [alt]="a.alt ?? a.titulo" class="apod-media" />
+      } @else {
+        <iframe [src]="a.urlRecurso" [title]="a.titulo" class="apod-media" allowfullscreen></iframe>
+      }
+    </div>
+
+    <div class="apod-texto">
+      <p class="fecha">{{ a.fecha }}</p>
+      <h2>{{ a.titulo }}</h2>
+      <div class="apod-explicacion" [innerHTML]="a.explicacion"></div>
+      <a [href]="a.url" target="_blank" rel="noopener">Ver original</a>
+      <button
+  class="btn-fav"
+  [attr.aria-pressed]="saved"
+  (click)="toggleFav()">
+  ❤ {{ saved ? 'Guardado' : 'Guardar' }}
+</button>
+    </div>
+  }
+</section>

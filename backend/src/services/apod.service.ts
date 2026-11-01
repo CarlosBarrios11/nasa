@@ -26,7 +26,7 @@ export async function obtenerImagenDelDia() : Promise<Apod> {
   const respuesta = await fetch(url); 
 
     if (!respuesta.ok) {
-        throw new Error(`JWST_HTTP_${respuesta.status}`);
+        throw new Error(`APOD_HTTP_${respuesta.status}`);
     }
 
     const data : ApodRaw = await respuesta.json();

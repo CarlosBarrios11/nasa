@@ -1,0 +1,109 @@
+/* === Detalle de misión — versión optimizada para móvil / iPhone === */
+
+.detalle-page {
+  width: min(900px, 92%);
+  margin: 2.5rem auto;
+  padding: 2rem;
+  background: linear-gradient(160deg,
+    rgba(22, 26, 46, 0.96),
+    rgba(11, 14, 28, 0.96));
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+  position: relative;
+  z-index: 1;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/* Quita el flash azul al tocar en iOS/Android */
+.detalle-page a,
+.detalle-page button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ---------- Título ---------- */
+.detalle-page h1 {
+  font-size: clamp(1.6rem, 3vw + 0.25rem, 2.4rem);
+  background: var(--accent-grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;   /* imprescindible en iOS Safari */
+  margin-bottom: 1rem;
+  overflow-wrap: anywhere;                /* títulos largos sin romper a 320px */
+}
+
+/* ---------- Párrafos ---------- */
+.detalle-page p {
+  color: var(--text-dim);
+  margin-bottom: 0.6rem;
+  overflow-wrap: anywhere;                /* evita overflow con URLs largas */
+}
+.detalle-page strong { color: var(--text); }
+
+/* ---------- Botón/enlace volver (44×44 mínimo táctil) ---------- */
+.volver {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-bottom: 1rem;
+  padding: 0.6rem 0.85rem;
+  min-height: 44px;                       /* touch target Apple HIG */
+  font-weight: 600;
+  color: var(--accent-2);
+  text-decoration: none;
+  border-radius: 8px;
+  touch-action: manipulation;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+@media (hover: hover) {
+  .volver:hover {
+    background: rgba(76, 201, 240, 0.08);
+    text-decoration: underline;
+  }
+}
+.volver:active {
+  background: rgba(76, 201, 240, 0.14);
+}
+.volver:focus-visible {
+  outline: 2px solid var(--accent-2);
+  outline-offset: 2px;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 600px) {
+  .detalle-page {
+    width: 94%;
+    margin: 1.5rem auto;
+    padding: 1.25rem;
+    border-radius: 16px;
+  }
+  .detalle-page h1 {
+    margin-bottom: 0.75rem;
+  }
+  .volver {
+    /* Full-width en móvil = botón grande, imposible fallar el toque */
+    display: flex;
+    width: 100%;
+    justify-content: flex-start;
+    margin-bottom: 1.25rem;
+  }
+}
+
+/* ---------- Accesibilidad ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .volver {
+    transition: none !important;
+    transform: none !important;
+  }
+}
+
+/* ---------- Safe area (opcional) ----------
+@supports (padding: env(safe-area-inset-left)) {
+  .detalle-page {
+    padding-left: max(1.25rem, env(safe-area-inset-left));
+    padding-right: max(1.25rem, env(safe-area-inset-right));
+  }
+}
+*/
