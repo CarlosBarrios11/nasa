@@ -1,0 +1,41 @@
+<div class="misiones-page">
+  <h1>Biblioteca de misiones espaciales</h1>
+
+  <label for="filtroDestino">Filtrar por destino:</label>
+  <select id="filtroDestino" (change)="onFiltroChange($event)" [value]="filtroDestino()">
+    <option value="todos">Todos los destinos</option>
+    <option value="Marte">Marte</option>
+    <option value="Luna">Luna</option>
+    <option value="Saturno">Saturno</option>
+    <option value="Jupiter">Júpiter</option>
+    <option value="Europa">Europa</option>
+    <option value="Espacio interestelar">Espacio interestelar</option>
+    <option value="Espacio profundo">Espacio profundo</option>
+  </select>
+
+  <p id="contador">{{ items().length }} misiones encontradas</p>
+
+  @if (loading()) {
+    <p>Cargando…</p>
+  }
+  @if (errorMsg()) {
+    <p class="error">{{ errorMsg() }}</p>
+  }
+
+  @if (!loading() && !errorMsg()) {
+    <div id="listaMisiones">
+      @for (m of items(); track m.id) {
+        <article class="card">
+          <h2 class="nombreCard">{{ m.nombre }}</h2>
+          <p class="destinoCard">{{ m.destino }}</p>
+          <p class="agenciaCard">{{ m.agencia }}</p>
+          <p class="anioCard">{{ m.anio }}</p>
+          <a [routerLink]="['/misiones', m.id]"></a>
+        </article>
+      }
+      @empty {
+        <p class="misiones-vacio">✦ No hay misiones para mostrar ✦</p>
+      }
+    </div>
+  }
+</div>

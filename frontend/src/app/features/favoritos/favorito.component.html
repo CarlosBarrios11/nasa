@@ -1,0 +1,48 @@
+<div class="favoritos-page">
+  <div class="favoritos-header">
+    <h1>Tus Favoritos</h1>
+    <button
+      type="button"
+      class="btn-limpiar-favoritos"
+      (click)="limpiarTodo()">
+      Limpiar todos los favoritos
+    </button>
+  </div>
+
+  <section class="favoritos-container">
+    @for (fav of favorites.favorites(); track fav.id) {
+      <article>
+        @switch (fav.type) {
+          @case ('image') {
+            <img [src]="fav.url" [alt]="fav.title" loading="lazy" />
+          }
+          @case ('video') {
+            <a [href]="fav.url" target="_blank" rel="noopener" class="fav-link">
+              <img [src]="fav.thumbnail || fav.url" [alt]="fav.title" loading="lazy" />
+              <span class="fav-play-icon">▶</span>
+            </a>
+          }
+          @case ('audio') {
+            <a [href]="fav.url" target="_blank" rel="noopener" class="fav-link">
+              <img [src]="fav.thumbnail || fav.url" [alt]="fav.title" loading="lazy" />
+              <span class="fav-play-icon">♪</span>
+            </a>
+          }
+        }
+        <div class="fav-meta">
+          <h3 [title]="fav.title">{{ fav.title }}</h3>
+          <button
+            type="button"
+            class="btn-quitar"
+            (click)="quitar(fav.id)"
+            [attr.aria-label]="'Quitar ' + fav.title">
+            ✕
+          </button>
+        </div>
+      </article>
+    }
+    @empty {
+      <p class="favoritos-vacio">✦ Aún no tienes favoritos guardados ✦</p>
+    }
+  </section>
+</div>

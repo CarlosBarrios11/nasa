@@ -1,0 +1,153 @@
+/* =========================================================
+   APOD — versión optimizada para móvil / iPhone
+   ========================================================= */
+
+.apod {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  gap: 2.5rem;
+  align-items: start;
+  padding: 2.5rem;
+  background: linear-gradient(180deg,
+    rgba(22, 26, 46, 0.85),
+    rgba(11, 14, 28, 0.85));
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  box-shadow: var(--shadow-lg);
+  position: relative;
+  overflow: hidden;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/* ---------- Contenedor de media ---------- */
+#apod-media-container {
+  position: relative;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: #000;
+  min-height: 320px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-md);
+}
+
+.apod-media {
+  width: 100%;
+  /* dvh sigue a la barra de Safari sin saltos; fallback con vh para navegadores viejos */
+  max-height: min(620px, 70vh);
+  max-height: min(620px, 70dvh);
+  object-fit: contain;
+  display: block;
+  background: #000;
+  border: 0;
+}
+
+/* ---------- Texto ---------- */
+.apod-texto {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  position: relative;
+  z-index: 1;
+  min-width: 0; /* evita que flex-items fuercen overflow del grid */
+}
+.fecha {
+  color: var(--accent-2);
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin: 0;
+}
+.apod-texto h2 {
+  font-size: clamp(1.4rem, 2.4vw + 0.5rem, 2rem);
+  margin: 0;
+  overflow-wrap: anywhere; /* títulos largos sin romper el grid a 320px */
+}
+.apod-explicacion {
+  color: var(--text-dim);
+  font-size: 0.98rem;
+  max-height: min(380px, 55vh);
+  max-height: min(380px, 55dvh);
+  overflow-y: auto;
+  padding-right: 0.5rem;
+  /* iOS: scroll interno suave + sin rubber-band hacia la página */
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  /* barra de scroll discreta también en móvil */
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+.apod-explicacion strong { color: var(--text); }
+.apod-explicacion a { color: var(--accent-2); }
+.apod-explicacion a:hover { text-decoration: underline; }
+.apod-texto a {
+  color: var(--accent-2);
+  align-self: flex-start;
+  font-size: 0.9rem;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ---------- Botón favorito ---------- */
+#apod-fav {
+  align-self: flex-end;
+  min-width: 44px;           /* touch target mínimo Apple HIG */
+  min-height: 44px;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ---------- Tablet / móvil horizontal ---------- */
+@media (max-width: 960px) {
+  .apod {
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+  }
+  .apod-media {
+    max-height: min(60vh, 500px);
+    max-height: min(60dvh, 500px);
+  }
+}
+
+/* ---------- Móvil vertical ---------- */
+@media (max-width: 600px) {
+  .apod {
+    padding: 1.25rem;
+    gap: 1.25rem;
+    border-radius: 16px;
+  }
+  #apod-media-container {
+    min-height: 180px;       /* no ocupa media pantalla antes de cargar */
+  }
+  .apod-media {
+    max-height: 50dvh;       /* deja ver el título/descripción sin scrollear */
+  }
+  .apod-explicacion {
+    max-height: 45dvh;       /* el scroll interno no se "come" la pantalla */
+    padding-right: 0.35rem;
+  }
+  .apod-texto h2 { font-size: clamp(1.25rem, 5vw, 1.75rem); }
+  .fecha { font-size: 0.78rem; }
+}
+
+/* ---------- Accesibilidad ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .apod,
+  .apod-media,
+  .apod-explicacion {
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ---------- Safe area (opcional) ----------
+@supports (padding: env(safe-area-inset-left)) {
+  .apod {
+    padding-left: max(1.25rem, env(safe-area-inset-left));
+    padding-right: max(1.25rem, env(safe-area-inset-right));
+  }
+}
+*/

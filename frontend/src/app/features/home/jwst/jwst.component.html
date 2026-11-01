@@ -1,0 +1,50 @@
+<section class="galeria">
+  <div class="galeria-header">
+    <h2>Galería JWST</h2>
+    <p>Explora las últimas imágenes del telescopio James Webb.</p>
+    <span>Favoritos: <strong class="fav-count">{{ favCount }}</strong></span>
+  </div>
+
+  @if (loading()) {
+    <p>Cargando…</p>
+  } @else if (errorMsg()) {
+    <p class="error">{{ errorMsg() }}</p>
+  } @else if (items().length === 0) {
+    <p class="sin-resultados">✦ No hay imágenes disponibles ✦</p>
+  } @else {
+    <div class="grid">
+      @for (item of items(); track item.id; let i = $index) {
+        <article class="card">
+          <img
+            class="card-img"
+            [src]="item.url"
+            [alt]="'JWST image ' + (i + 1)"
+            loading="lazy"
+          />
+          <button
+            class="btn-fav card-fav"
+            [attr.aria-pressed]="isFav(item.id)"
+            (click)="toggleFav(item, i)"
+            aria-label="Guardar en favoritos">
+            ❤
+          </button>
+        </article>
+      }
+    </div>
+
+    <nav class="pagination" aria-label="Paginación JWST">
+      <button class="pg-btn" (click)="prev()" [disabled]="page() === 1" title="Anterior">‹</button>
+      <span class="pg-info">Página <strong>{{ page() }}</strong></span>
+      <button class="pg-btn" (click)="next()" [disabled]="!hayMas()" title="Siguiente">›</button>
+    </nav>
+
+    <div class="per-page">
+      <label for="per-page">Imágenes por página:</label>
+      <select id="per-page" (change)="onPerPageChange($event)">
+        <option value="12" [selected]="perPage() === 12">12</option>
+        <option value="24" [selected]="perPage() === 24">24</option>
+        <option value="48" [selected]="perPage() === 48">48</option>
+      </select>
+    </div>
+  }
+</section>

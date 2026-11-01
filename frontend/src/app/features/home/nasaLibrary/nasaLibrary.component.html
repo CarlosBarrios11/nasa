@@ -1,0 +1,147 @@
+<section class="biblioteca">
+  <div class="biblioteca-header">
+    <h2>NASA Image and Video Library</h2>
+    <p>Busca y filtra imágenes, videos y audio del archivo histórico de la NASA.</p>
+    <span>Favoritos: <strong class="fav-count">{{ favCount }}</strong></span>
+  </div>
+
+  <form class="filtros" (ngSubmit)="buscar()">
+    <div class="filtro-campo filtro-buscar">
+      <label for="lib-q">Buscar</label>
+      <input
+        id="lib-q"
+        type="search"
+        [ngModel]="q()"
+        (ngModelChange)="q.set($event)"
+        name="q"
+        placeholder="Ej: Marte, Apollo 11…"
+        autocomplete="off"
+      />
+    </div>
+
+    <div class="filtro-campo">
+      <label for="lib-tipo">Tipo</label>
+      <select
+        id="lib-tipo"
+        [ngModel]="mediaType()"
+        (ngModelChange)="onMediaTypeChange($event)"
+        name="media_type">
+        <option value="">Todos</option>
+        <option value="image">Imágenes</option>
+        <option value="video">Videos</option>
+        <option value="audio">Audio</option>
+      </select>
+    </div>
+
+    <div class="filtro-campo">
+      <label for="lib-desde">Desde</label>
+      <select
+        id="lib-desde"
+        [ngModel]="yearStart()"
+        (ngModelChange)="yearStart.set($event)"
+        name="year_start">
+        <option value="">—</option>
+        <option value="1960">1960</option>
+        <option value="1970">1970</option>
+        <option value="1980">1980</option>
+        <option value="1990">1990</option>
+        <option value="2000">2000</option>
+        <option value="2010">2010</option>
+        <option value="2020">2020</option>
+      </select>
+    </div>
+
+    <div class="filtro-campo">
+      <label for="lib-hasta">Hasta</label>
+      <select
+        id="lib-hasta"
+        [ngModel]="yearEnd()"
+        (ngModelChange)="yearEnd.set($event)"
+        name="year_end">
+        <option value="">—</option>
+        <option value="1970">1970</option>
+        <option value="1980">1980</option>
+        <option value="1990">1990</option>
+        <option value="2000">2000</option>
+        <option value="2010">2010</option>
+        <option value="2020">2020</option>
+        <option value="2030">2030</option>
+      </select>
+    </div>
+
+    <div class="filtro-acciones">
+      <button type="submit" class="btn-primario">Buscar</button>
+      <button type="button" class="btn-secundario" (click)="limpiar()">Limpiar</button>
+    </div>
+  </form>
+
+  @if (loading()) {
+    <p>Cargando…</p>
+  }
+  @if (errorMsg()) {
+    <p class="error">{{ errorMsg() }}</p>
+  }
+
+  @if (!loading() && !errorMsg() && total() > 0) {
+    <p class="biblioteca-info">
+      {{ total() }} resultados · página {{ page() }} de {{ totalPaginas }}
+    </p>
+  }
+
+  <div class="grid">
+    @for (item of items(); track item.id) {
+      <article class="card">
+        <div class="card-media">
+          <a
+            [href]="item.detailUrl"
+            target="_blank"
+            rel="noopener"
+            class="card-media-link"
+            [attr.aria-label]="'Abrir ' + item.title + ' en NASA'">
+            <img [src]="item.thumbnail" [alt]="item.title" loading="lazy" />
+            @if (item.type !== 'image') {
+              <span class="card-play-icon" aria-hidden="true">▶</span>
+            }
+          </a>
+          <span class="card-badge">{{ item.type }}</span>
+        </div>
+
+        <div class="card-body">
+          <h3 class="card-title">{{ item.title }}</h3>
+          <div class="card-footer">
+            <time class="card-date">{{ item.date }}</time>
+            <button
+              class="btn-fav card-fav"
+              [attr.aria-pressed]="isFav(item.id)"
+              (click)="toggleFav(item)"
+              aria-label="Guardar en favoritos">
+              ❤
+            </button>
+          </div>
+        </div>
+      </article>
+    }
+    @empty {
+      @if (!loading() && !errorMsg()) {
+        <p class="sin-resultados">✦ No hay resultados para tu búsqueda ✦</p>
+      }
+    }
+  </div>
+
+  <nav class="pagination" aria-label="Paginación biblioteca">
+    <button class="pg-btn" (click)="prev()" [disabled]="page() === 1" title="Anterior">‹</button>
+    <span class="pg-info">Página <strong>{{ page() }}</strong> / {{ totalPaginas }}</span>
+    <button class="pg-btn" (click)="next()"
+            [disabled]="page() * pageSize() >= total()" title="Siguiente">›</button>
+  </nav>
+
+  <div class="per-page">
+    <label for="lib-per-page">Imágenes por página:</label>
+    <select id="lib-per-page" (change)="onPerPageChange($event)">
+      <option value="12" [selected]="pageSize() === 12">12</option>
+      <option value="24" [selected]="pageSize() === 24">24</option>
+      <option value="48" [selected]="pageSize() === 48">48</option>
+      <option value="60" [selected]="pageSize() === 60">60</option>
+    </select>
+  </div>
+</section>
