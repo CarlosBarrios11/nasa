@@ -31,14 +31,14 @@ export async function obtenerImagenesJwst(page: number, perPage: number) : Promi
 
     
     if (!data || !Array.isArray(data.body)) {
-        throw new Error("JWST_FORMATO_INVALIDO");
+        throw new Error("APOD_INAVLID_FORMAT");
     }
 
     let dataNormalizada : JwstResponseNormalizada;
 
     dataNormalizada = {
         body: data.body.map((img) => ({ id: img.id, url: img.location })), //Aquí se convierte la interfaz con los nombres de la clave con que quiero que el frontend interactue, se pasará solamente id y url de todos los atributos que se trajo en data
-        hayMas: data.body.length > 0, //define si hay más elementos
+        hayMas: data.body.length === perPage, //define si hay más elementos
     };
     
     return dataNormalizada;
