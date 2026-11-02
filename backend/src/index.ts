@@ -5,6 +5,7 @@ import { apiRouter } from "./routes/index.routes.js";
 
 const app = express();
 
+//Sin esto, el navegador bloquea la respuesta antes de que llegue al código
 app.use(cors({ origin: 'http://localhost:4200' }));
 app.use(express.json());
 app.use("/api", apiRouter);

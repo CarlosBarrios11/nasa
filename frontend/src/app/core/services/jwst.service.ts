@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
-import { environment } from '../../../enviroments/development.enviroment';
+import { environment } from '../../../environments/environment.development';
 import { JwstResponse } from '../models/jwst.model';
 
 @Injectable({ providedIn: 'root' })

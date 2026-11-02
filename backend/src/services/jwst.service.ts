@@ -31,7 +31,7 @@ export async function obtenerImagenesJwst(page: number, perPage: number) : Promi
 
     
     if (!data || !Array.isArray(data.body)) {
-        throw new Error("APOD_INAVLID_FORMAT");
+        throw new Error("JWST_FORMATO_INVALIDO");
     }
 
     let dataNormalizada : JwstResponseNormalizada;
