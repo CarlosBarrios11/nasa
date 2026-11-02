@@ -1,59 +1,97 @@
-# Frontend
+AstroLab · Frontend
+Aplicación Angular 22 que consume la API intermedia AstroLab Backend y ofrece cuatro vistas:
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.2.3.
+Home — APOD del día, galería JWST y biblioteca NASA con filtros
 
-## Development server
+Misiones — catálogo con filtro por destino
 
-To start a local development server, run:
+Misiones / Destino — misiones filtradas por destino seleccionado
 
-```bash
+Favoritos — colección local persistida en localStorage
+
+Requisitos previos
+Node.js ≥ 20 (probado en 24.21.0)
+
+npm ≥ 10
+
+Angular CLI 22.2.5 (se instala como dev-dependency del proyecto, no es necesario instalarlo globalmente)
+
+El backend corriendo en http://localhost:3000
+
+Instalación
+bash
+cd frontend
+npm install
+Variables de entorno
+El frontend no ocupa .env. La URL donde está corriendo el backend se guarda en:
+
+text
+src/environments/environment.development.ts
+Servidor de desarrollo
+bash
 ng serve
-```
+Abrir: http://localhost:4200
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Estructura del proyecto
+text
+src/app/
+├── core/
+│   ├── models/                    # Interfaces TypeScript
+│   │   ├── apod.model.ts
+│   │   ├── jwst.model.ts
+│   │   ├── nasa-item.model.ts
+│   │   ├── mision.model.ts
+│   │   └── favorite.model.ts
+│   └── services/
+│       ├── apod.services.ts
+│       ├── jwst.service.ts
+│       ├── nasa-library.service.ts
+│       ├── misiones.service.ts
+│       ├── favoritos.service.ts
+│       └── preferences.service.ts
+├── features/
+│   ├── home/
+│   │   ├── home.component.ts
+│   │   ├── apod/
+│   │   ├── jwst/
+│   │   └── nasaLibrary/
+│   ├── misiones/
+│   │   ├── misiones.component.ts
+│   │   └── detail/
+│   └── favoritos/
+├── app.component.ts
+├── app.config.ts
+└── app.routes.ts
+Funcionalidades implementadas
+Home
+APOD — muestra la imagen del día con título, fecha y explicación ([innerHTML] con sanitización de Angular). Botón ❤ guarda en favoritos.
 
-## Code scaffolding
+Galería JWST — grid paginado (12/24/48 por página) con favoritos por imagen. La preferencia de perPage se guarda en localStorage.
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+NASA Library — buscador con filtros (q, tipo, rango de años), paginación y selector de resultados por página. El tipo seleccionado se persiste en una cookie no sensible (astrolab_tipo_media, 30 días).
 
-```bash
-ng generate component component-name
-```
+Para videos/audio, la tarjeta muestra un botón ▶ y al hacer clic abre el recurso original en images.nasa.gov/details/{nasa_id}.
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+Misiones
+Lista completa de misiones desde el backend (GET /api/misiones).
 
-```bash
-ng generate --help
-```
+Filtro por destino con <select> → GET /api/misiones?destino=Marte.
 
-## Building
+Favoritos
+Persiste en localStorage bajo astrolab_favorites (array de Favorite).
 
-To build the project run:
+Se muestran como grid: imágenes con <img>, videos/audio con thumbnail + ▶ que abre el recurso original.
 
-```bash
-ng build
-```
+Botón "Limpiar todos los favoritos" (con confirm()).
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Navegación
+Ruta	Componente
+/	HomeComponent
+/favoritos	FavoritosComponent
+/misiones	MisionesComponent
+/misiones/:destino	MisionesDetailComponent
+Persistencia en el navegador
+Dato	Storage	Clave	Propósito
+Favoritos	localStorage	astrolab_favorites	Colección del usuario
+Preferencia per-page JWST/Library	localStorage	astrolab_pagination_prefs	UX: mantener la elección del usuario
+Tipo de media NASA Library	Cookie (30 días)	astrolab_tipo_media	Filtro recordado entre visitas
